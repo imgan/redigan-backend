@@ -1,0 +1,28 @@
+# This is an example Starter pipeline configuration
+# Use a skeleton to build, test and deploy using manual and parallel steps
+# -----
+
+pipelines:
+  branches:    #these will run on every push of the branch
+    sit:
+      - step:
+          # trigger: manual  # Uncomment to make this a manual deployment.
+          script:
+            - echo "Deploying to master environment"
+            - pipe: atlassian/ssh-run:0.3.0
+              variables:
+                SSH_USER: $SSH_USER
+                SERVER: $SERVER
+                PORT: $PORT
+                COMMAND: >
+                  cd /home/ubuntu/poservice-backend && 
+                  git reset --hard origin/sit &&
+                  git pull &&
+                  bash /home/ubuntu/bitbucket-cp-file/cp3.sh &&
+                  docker-compose -f backend-stack.yml up -d --build &&
+                  docker-compose -f backend-stack.yml push &&
+                  docker-compose -f backend-stack.yml down -v &&
+                  bash /home/ubuntu/bitbucket-cp-file/script3.sh &&
+                  docker service rm  soechi_backend  &&
+                  docker stack deploy -c backend-stack.yml soechi
+

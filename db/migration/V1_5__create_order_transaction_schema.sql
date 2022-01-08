@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS `order_transaction` (
+  `id` bigint(20) NOT NULL,
+  `additional_fee` int(11) DEFAULT NULL,
+  `additional_info` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `customer_id` bigint(20) DEFAULT NULL,
+  `delivery_date` varchar(255) DEFAULT NULL,
+  `delivery_fee` int(11) DEFAULT NULL,
+  `merchant_id` bigint(20) DEFAULT NULL,
+  `order_number` varchar(20) DEFAULT NULL,
+  `order_status` bigint(20) DEFAULT NULL,
+  `updated_by` varchar(100) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  `customer_name` varchar(255) DEFAULT NULL,
+  `is_paid` bit(1) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `tracking_link` varchar(255) DEFAULT NULL,
+  `delivery_time` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

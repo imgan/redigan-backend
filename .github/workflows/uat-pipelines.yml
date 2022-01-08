@@ -1,0 +1,28 @@
+name: Deploy to UAT
+on: 
+  push:
+    branches:
+      - sit
+jobs:
+  build:
+    runs-on: self-hosted
+    timeout-minutes: 30
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+                  cd /home/ubuntu/odin-backend && 
+                  git reset --hard origin/sit &&
+                  git pull &&
+                  bash /home/ubuntu/bitbucket-cp-file/cp3.sh &&
+                  docker-compose -f backend-stack.yml up -d --build &&
+                  docker-compose -f backend-stack.yml push &&
+                  docker-compose -f backend-stack.yml down -v &&
+                  bash /home/ubuntu/bitbucket-cp-file/script3.sh &&
+                  docker service rm  soechi_backend  &&
+                  docker stack deploy -c backend-stack.yml soechi
+

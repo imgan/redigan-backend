@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  spring-boot:
+    container_name: odin-backend
+    build: ./
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/usr/src/maven
